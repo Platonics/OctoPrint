@@ -1189,6 +1189,9 @@ class SlicerPlugin(OctoPrintPlugin):
 		"""
 		return None
 
+	def get_slicer_default_profiles(self):
+		return []
+
 	def get_slicer_profile(self, path):
 		"""
 		Should return a :class:`~octoprint.slicing.SlicingProfile` parsed from the slicing profile stored at the

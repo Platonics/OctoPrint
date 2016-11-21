@@ -126,14 +126,24 @@ class SlicingManager(object):
 		available slicers.
 		"""
 		plugins = octoprint.plugin.plugin_manager().get_implementations(octoprint.plugin.SlicerPlugin)
-		slicers = dict()
+		self._slicers = dict()
 		for plugin in plugins:
 			try:
-				slicers[plugin.get_slicer_properties()["type"]] = plugin
+				self._slicers[plugin.get_slicer_properties()["type"]] = plugin
 			except:
 				self._logger.exception("Error while getting properties from slicer {}, ignoring it".format(plugin._identifier))
 				continue
-		self._slicers = slicers
+			ps = self.get_all_profiles_of_slicer(plugin)
+			self.save_profiles(ps)
+
+	def get_all_profiles_of_slicer(self, slicer_plugin):
+		return slicer_plugin.get_slicer_default_profiles()
+
+	def save_profiles(self, slicer_profiles):
+		for p in slicer_profiles:
+			path = self.get_profile_path(p.slicer, p.name)
+			if not os.path.exists(path):
+				self.save_profile(p.slicer, p.name, p.data, allow_overwrite=False, display_name=p.display_name, description=p.description)
 
 	@property
 	def slicing_enabled(self):
