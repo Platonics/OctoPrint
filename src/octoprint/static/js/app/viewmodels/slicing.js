@@ -34,7 +34,12 @@ $(function() {
             });
         };
 
+        self.chooseProfile = function(profileKey) {
+            self.profile(profileKey);
+        };
+
         self.profilesForSlicer = function(key) {
+            self.slicer("slic3r");
             if (key == undefined) {
                 key = self.slicer();
             }
@@ -42,8 +47,7 @@ $(function() {
                 return;
             }
             var slicer = self.data[key];
-
-            var selectedProfile = undefined;
+            var selectedProfile = "average";
             self.profiles.removeAll();
             _.each(_.values(slicer.profiles), function(profile) {
                 var name = profile.displayName;
@@ -96,7 +100,6 @@ $(function() {
             } else {
                 self.profilesForSlicer(self.slicer());
             }
-
             return slicers;
         });
 
@@ -119,7 +122,6 @@ $(function() {
             self.destinationFilename(self.file().substr(0, self.file().lastIndexOf(".")));
             self.printerProfile(self.printerProfiles.currentProfile());
             self.afterSlicing("none");
-
             $("#slicing_configuration_dialog").modal("show");
         };
 
@@ -220,7 +222,7 @@ $(function() {
                 })) {
                 destinationFilename = destinationFilename + "." + destinationExtensions[0];
             }
-
+            self.printerProfile("_default");
             var data = {
                 command: "slice",
                 slicer: self.slicer(),
