@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title data-bind="text: title">OctoPrint</title>
+        <title data-bind="text: title">Platonics</title>
 
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/tentacle-32x32.png') }}">
         <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='img/apple-touch-icon-114x114.png') }}">
@@ -19,7 +19,7 @@
             <div id="navbar" class="navbar navbar-static-top">
                 <div class="navbar-inner" data-bind="css: appearanceClasses">
                     <div class="container">
-                        <a class="brand" href="#"> <span data-bind="text: appearance.brand">OctoPrint</span></a>
+                        <a class="brand" href="#"> <span data-bind="text: appearance.brand">Platonics</span></a>
                         <div class="nav-collapse">
                             <!-- Navbar -->
                             <ul class="nav pull-right">
@@ -79,9 +79,8 @@
                     {% if templates.tab.order %}
                     <div class="tabbable {% if templates.sidebar.order %}span8{% else %}span12{% endif %}">
                         <ul class="nav nav-tabs" id="tabs">
-                            {% for key in templates.tab.order %}
+                            {% for key in ['plugin_helloworld', 'plugin_nfc', 'temperature'] %}
                                 {% set entry, data = templates.tab.entries[key] %}
-                                {% if entry=="Temperature" or entry=="3D Viewer" or entry=="NFC Tag"%}
                                 {% if "custom_bindings" not in data or data["custom_bindings"] %}<!-- ko allowBindings: false -->{% endif %}
                                 <li id="{{ data._div }}_link"
                                     class="{% if loop.first %}active{% endif %} {% if "classes_link" in data %}{{ data.classes_link|join(' ') }}{% elif "classes" in data %}{{ data.classes|join(' ') }}{% endif %}"
@@ -91,12 +90,11 @@
                                         <a href="#{{ data._div }}" data-toggle="tab">{{ entry|e }}</a>
                                 </li>
                                 {% if "custom_bindings" not in data or data["custom_bindings"] %}<!-- /ko -->{% endif %}
-                                {% endif %}
                             {% endfor %}
                         </ul>
 
                         <div class="tab-content">
-                            {% for key in templates.tab.order %}
+                            {% for key in ['plugin_helloworld', 'plugin_nfc', 'temperature'] %}
                                 {% set entry, data = templates.tab.entries[key] %}
                                 {% if "custom_bindings" not in data or data["custom_bindings"] %}<!-- ko allowBindings: false -->{% endif %}
                                 <div id="{{ data._div }}"
