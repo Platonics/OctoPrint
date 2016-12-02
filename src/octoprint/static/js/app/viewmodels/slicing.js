@@ -88,7 +88,7 @@ $(function() {
                     return slicer.key == key;
                 });
             };
-
+            self.slicer("slic3r");
             var current = self.slicer();
             if (!containsSlicer(current)) {
                 if (self.defaultSlicer !== undefined && containsSlicer(self.defaultSlicer)) {
